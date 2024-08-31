@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from 'react-elastic-carousel'
-import { useNavigate } from 'react-router-dom'
 
 import Category from '../../assets/category-img.svg'
 import api from '../../services/api'
@@ -8,11 +7,10 @@ import { Container, CategoryImg, ContainerItens, Image, Button } from './styles'
 
 export function CategoryCarousel() {
   const [categories, setCategories] = useState([])
-  const navigate = useNavigate()
 
   useEffect(() => {
     async function loadCategories() {
-      const { data } = await api.get('categories')
+      const { data } = await api.get('/categories')
       console.log('Categories data:', data)
       setCategories(data)
     }
@@ -24,7 +22,7 @@ export function CategoryCarousel() {
     { width: 400, itemsToShow: 2 },
     { width: 600, itemsToShow: 3 },
     { width: 900, itemsToShow: 4 },
-    { width: 1300, itemsToShow: 4 }
+    { width: 1300, itemsToShow: 5 }
   ]
 
   return (
@@ -42,7 +40,7 @@ export function CategoryCarousel() {
                 src={`https://codeburger-back.onrender.com/product-file/${category.path}`}
                 alt={`foto da categoria ${category.name}`}
               />
-              <Button onClick={() => navigate(`/produtos/${category.id}`)}>
+              <Button to="/produtos/0" state={{ categoryId: category.id }}>
                 {category.name}
               </Button>
             </ContainerItens>

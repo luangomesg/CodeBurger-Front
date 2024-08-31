@@ -1,53 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import ProductsLogo from '../../assets/productsLogo.svg'
+import PropTypes from 'prop-types'
+
+import ProductsImage from '../../assets/header-img-products.svg'
 import { CardProduct, Header } from '../../components'
-import apiCodeburger from '../../services/api'
+import api from '../../services/api'
 import formatCurrency from '../../utils/formatCurrency'
 import {
   Container,
+  ProductsImg,
   CategoryButton,
   CategoriesMenu,
   ProductsContainer
 } from './styles'
 
 function Products() {
-  const { categoryId } = useParams()
-  const [activeCategory, setActiveCategory] = useState(
-    parseInt(categoryId, 10) || 0
-  )
+  const location = useLocation()
+
+  let categoryId = 0
+  if (location.state && location.state?.categoryId) {
+    categoryId = location.state.categoryId
+  }
+
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
-  const [filterProducts, setFilterProducts] = useState([])
-
-  useEffect(() => {
-    document.body.style.backgroundColor = '#e5e5e5'
-
-    return () => {
-      document.body.style.backgroundColor = null
-    }
-  }, [])
+  const [filteredProducts, setfilteredProducts] = useState([])
+  const [activeCategory, setactiveCategory] = useState(categoryId)
 
   useEffect(() => {
     async function loadCategories() {
-      const { data } = await apiCodeburger.get('categories')
-
+      const { data } = await api.get('categories')
       const newCategories = [{ id: 0, name: 'Todas' }, ...data]
-
       setCategories(newCategories)
     }
 
-    loadCategories()
-
     async function loadProducts() {
-      const { data } = await apiCodeburger.get('products')
-
-      const newProducts = data.map(product => ({
-        ...product,
-        formatedPrice: formatCurrency(product.price)
-      }))
-
+      const { data: allProducts } = await api.get('products')
+      const newProducts = allProducts.map(product => {
+        return { ...product, formatedPrice: formatCurrency(product.price) }
+      })
       setProducts(newProducts)
     }
 
@@ -57,42 +49,46 @@ function Products() {
 
   useEffect(() => {
     if (activeCategory === 0) {
-      setFilterProducts(products)
+      setfilteredProducts(products)
     } else {
-      const newFilterProducts = products.filter(
+      const newfilteredProducts = products.filter(
         product => product.category_id === activeCategory
       )
-      setFilterProducts(newFilterProducts)
+      setfilteredProducts(newfilteredProducts)
     }
   }, [activeCategory, products])
 
   return (
     <Container>
       <Header />
-      <img className="productLogo" src={ProductsLogo} alt="logo" />
+      <ProductsImg src={ProductsImage} alt="Imagem de Produtos" />
       <CategoriesMenu>
         {categories &&
           categories.map(category => (
             <CategoryButton
+              type="button"
               key={category.id}
-              onClick={() => {
-                setActiveCategory(category.id)
-              }}
               isActiveCategory={activeCategory === category.id}
+              onClick={() => {
+                setactiveCategory(category.id)
+              }}
             >
               {category.name}
             </CategoryButton>
           ))}
       </CategoriesMenu>
-
       <ProductsContainer>
-        {filterProducts &&
-          filterProducts.map(product => (
+        {filteredProducts &&
+          filteredProducts.map(product => (
             <CardProduct key={product.id} product={product} />
           ))}
       </ProductsContainer>
     </Container>
   )
+}
+
+Products.propTypes = {
+  location: PropTypes.object
 }
 
 export default Products
