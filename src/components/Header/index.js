@@ -36,12 +36,6 @@ export function Header() {
         >
           Ver Produtos
         </PageLink>
-        <PageLink
-          onClick={() => navigate('/pedidos')}
-          isActive={pathname === '/pedidos'}
-        >
-          Ver Pedidos/Menu Admin
-        </PageLink>
       </ContainerLeft>
 
       <ContainerRight>
