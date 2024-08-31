@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiDevBurger = axios.create({
-  baseURL: 'https://codeburger-backend.onrender.com',
+  baseURL: 'https://codeburger-back.onrender.com',
   headers: {
     'Content-Type': 'application/json'
   }
