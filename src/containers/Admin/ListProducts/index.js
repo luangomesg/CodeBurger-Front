@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import CancelIcon from '@mui/icons-material/Cancel'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -13,7 +14,7 @@ import TableRow from '@mui/material/TableRow'
 
 import api from '../../../services/api'
 import formatCurrency from '../../../utils/formatCurrency'
-import { Container, Img, EditIconStyles } from './styles'
+import { Container, Img, EditIconStyles, DeleteIconStyle } from './styles'
 
 function ListProducts() {
   const [products, setProducts] = useState([])
@@ -40,6 +41,16 @@ function ListProducts() {
 
   const editProduct = product => {
     navigate('/editar-produtos', { state: { product } })
+  }
+
+  async function deleteProduct(product) {
+    try {
+      await api.delete(`products/${product.id}`)
+      setProducts(products.filter(p => p.id !== product.id))
+      toast.success('Produto deletado com sucesso')
+    } catch (err) {
+      toast.error('Falha ao deletar o produto')
+    }
   }
 
   return (
@@ -74,6 +85,7 @@ function ListProducts() {
                     />
                   </TableCell>
                   <TableCell>
+                    <DeleteIconStyle onClick={() => deleteProduct(product)} />
                     <EditIconStyles onClick={() => editProduct(product)} />
                   </TableCell>
                 </TableRow>
