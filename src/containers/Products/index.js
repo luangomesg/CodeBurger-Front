@@ -12,7 +12,7 @@ import {
   ProductsContainer
 } from './styles'
 
-export function Products() {
+function Products() {
   const { categoryId } = useParams()
   const [activeCategory, setActiveCategory] = useState(
     parseInt(categoryId, 10) || 0
@@ -94,3 +94,5 @@ export function Products() {
     </Container>
   )
 }
+
+export default Products
