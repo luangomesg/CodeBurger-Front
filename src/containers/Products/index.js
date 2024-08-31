@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import ProductsImage from '../../assets/header-img-products.svg'
-import { CardProduct } from '../../components'
+import { CardProduct, Header } from '../../components'
 import api from '../../services/api'
 import formatCurrency from '../../utils/formatCurrency'
 import {
@@ -60,6 +60,7 @@ function Products() {
 
   return (
     <Container>
+      <Header />
       <ProductsImg src={ProductsImage} alt="Imagem de Produtos" />
       <CategoriesMenu>
         {categories &&
