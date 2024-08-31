@@ -1,29 +1,20 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
-import { Header } from '../components/Header'
-
-function PrivateRoute({ element: Element, isAdmin, ...rest }) {
+function PrivateRouter({ isAdmin }) {
   const user = localStorage.getItem('devburger:userData')
 
-  if (!user) {
-    return <Navigate to="/login" replace />
+  if (isAdmin && !JSON.parse(user).admin) {
+    return <Navigate to="/login" />
   }
 
-  return (
-    <>
-      {!isAdmin && <Header />}
-      <Element {...rest} />
-    </>
-  )
+  return user ? <Outlet /> : <Navigate to="/login" />
 }
 
-PrivateRoute.propTypes = {
-  element: PropTypes.oneOfType([PropTypes.func, PropTypes.elementType])
-    .isRequired,
-  isAdmin: PropTypes.bool.isRequired
+PrivateRouter.propTypes = {
+  isAdmin: PropTypes.bool
 }
 
-export default PrivateRoute
+export default PrivateRouter
