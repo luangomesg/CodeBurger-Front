@@ -17,13 +17,13 @@ import formatCurrency from '../../../utils/formatCurrency'
 import { Container, Img, EditIconStyles, DeleteIconStyle } from './styles'
 
 function ListProducts() {
-  const [products, setProducts] = useState([])
   const navigate = useNavigate()
+  const [products, setProducts] = useState()
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        const { data } = await api.get('/products')
+        const { data } = await api.get('products')
         setProducts(data)
       } catch (error) {
         console.error('Falha ao carregar produtos', error)
