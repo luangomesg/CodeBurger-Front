@@ -43,15 +43,15 @@ function ListProducts() {
     navigate('/editar-produtos', { state: { product } })
   }
 
-  async function deleteProduct(product) {
-    try {
-      await api.delete(`products/${product.id}`)
-      setProducts(products.filter(p => p.id !== product.id))
-      toast.success('Produto deletado com sucesso')
-    } catch (err) {
-      toast.error('Falha ao deletar o produto')
-    }
-  }
+  // async function deleteProduct(product) {
+  //   try {
+  //     await api.delete(`products/${product.id}`)
+  //     setProducts(products.filter(p => p.id !== product.id))
+  //     toast.success('Produto deletado com sucesso')
+  //   } catch (err) {
+  //     toast.error('Falha ao deletar o produto')
+  //   }
+  // }
 
   return (
     <Container>
@@ -85,7 +85,7 @@ function ListProducts() {
                     />
                   </TableCell>
                   <TableCell>
-                    <DeleteIconStyle onClick={() => deleteProduct(product)} />
+                    {/* <DeleteIconStyle onClick={() => deleteProduct(product)} /> */}
                     <EditIconStyles onClick={() => editProduct(product)} />
                   </TableCell>
                 </TableRow>

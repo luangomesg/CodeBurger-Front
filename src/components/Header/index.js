@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import Cart from '../../assets/cart-icon.svg'
 import Person from '../../assets/users-icon.svg'
+import { useCart } from '../../hooks/CartContext'
 import { useUser } from '../../hooks/UserContext'
 import {
   Container,
@@ -11,16 +12,19 @@ import {
   ContainerText,
   PageLink,
   Line,
-  PageLinkExit
+  PageLinkExit,
+  PageLinkCart
 } from './styles'
 
 export function Header() {
   const { logout, userData } = useUser()
+  const { cartProducts, clearCart } = useCart()
   const navigate = useNavigate()
   const location = useLocation()
   const { pathname } = location
 
   const logoutUser = () => {
+    clearCart()
     logout()
     navigate('/login')
   }
@@ -39,9 +43,12 @@ export function Header() {
       </ContainerLeft>
 
       <ContainerRight>
-        <PageLink onClick={() => navigate('/carrinho')}>
+        <PageLinkCart
+          onClick={() => navigate('/carrinho')}
+          data-cartcount={cartProducts.length}
+        >
           <img src={Cart} alt="carrinho" />
-        </PageLink>
+        </PageLinkCart>
         <Line></Line>
         <PageLink>
           <img src={Person} alt="logo-pessoa" />

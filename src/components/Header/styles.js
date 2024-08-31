@@ -24,6 +24,22 @@ export const PageLink = styled.a`
   font-weight: ${props => (props.isActive ? 'bold' : 'normal')};
 `
 
+export const PageLinkCart = styled.a`
+  display: flex;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+
+  &::after {
+    content: '${props => props['data-cartcount']}';
+    height: 20px;
+    padding: 0 5px 0 5px;
+    border-radius: 100%;
+    background-color: #9758a6;
+    color: white;
+  }
+`
+
 export const ContainerRight = styled.div`
   display: flex;
   align-items: center;

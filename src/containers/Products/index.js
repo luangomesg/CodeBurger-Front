@@ -30,13 +30,13 @@ function Products() {
 
   useEffect(() => {
     async function loadCategories() {
-      const { data } = await api.get('/categories')
+      const { data } = await api.get('categories')
       const newCategories = [{ id: 0, name: 'Todas' }, ...data]
       setCategories(newCategories)
     }
 
     async function loadProducts() {
-      const { data: allProducts } = await api.get('/products')
+      const { data: allProducts } = await api.get('products')
       const newProducts = allProducts.map(product => {
         return { ...product, formatedPrice: formatCurrency(product.price) }
       })
