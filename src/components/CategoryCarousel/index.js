@@ -37,7 +37,7 @@ export function CategoryCarousel() {
           categories.map(category => (
             <ContainerItens key={category.id}>
               <Image
-                src={`https://devburger-backend-production-8436.up.railway.app/product-file/${category.path}`}
+                src={`https://codeburger-back.onrender.com/product-file/${category.path}`}
                 alt={`foto da categoria ${category.name}`}
               />
               <Button to="/produtos" state={{ categoryId: category.id }}>
