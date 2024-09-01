@@ -26,7 +26,7 @@ export function Header() {
   const logoutUser = () => {
     clearCart()
     logout()
-    navigate('/login')
+    navigate('/')
   }
   return (
     <Container>

@@ -10,11 +10,11 @@ function MyRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
 
-        <Route path="/" element={<PrivateRouter />}>
-          <Route path="/" element={<Home />} />
+        <Route path="/home" element={<PrivateRouter />}>
+          <Route path="/home" element={<Home />} />
         </Route>
 
         <Route path="/produtos" element={<PrivateRouter />}>
