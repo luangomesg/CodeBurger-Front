@@ -10,16 +10,16 @@ export const UserProvider = ({ children }) => {
   const putUserData = async userInfo => {
     setUserData(userInfo)
 
-    await localStorage.setItem('devburger:userData', JSON.stringify(userInfo))
+    localStorage.setItem('devburger:userData', JSON.stringify(userInfo))
   }
 
   const logout = async () => {
-    await localStorage.removeItem('devburger:userData')
+    localStorage.removeItem('devburger:userData')
   }
 
   useEffect(() => {
     const loadUserData = async () => {
-      const clientInfo = await localStorage.getItem('devburger:userData')
+      const clientInfo = localStorage.getItem('devburger:userData')
 
       if (clientInfo) {
         setUserData(JSON.parse(clientInfo))

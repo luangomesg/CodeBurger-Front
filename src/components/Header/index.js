@@ -24,9 +24,9 @@ export function Header() {
   const { pathname } = location
 
   const logoutUser = () => {
+    navigate('/')
     clearCart()
     logout()
-    navigate('/')
   }
   return (
     <Container>
