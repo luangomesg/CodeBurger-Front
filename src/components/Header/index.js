@@ -31,7 +31,10 @@ export function Header() {
   return (
     <Container>
       <ContainerLeft>
-        <PageLink onClick={() => navigate('/home')} isActive={pathname === '/'}>
+        <PageLink
+          onClick={() => navigate('/home')}
+          isActive={pathname === '/home'}
+        >
           Home
         </PageLink>
         <PageLink
